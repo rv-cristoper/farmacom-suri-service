@@ -7,7 +7,7 @@
 import { Logger, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
-import * as mongoosePaginate from 'mongoose-paginate-v2';
+import 'mongoose-paginate-v2';
 import { ConfigurationService } from '../../config/configuration.service';
 import configuration from '../../config/configuration';
 
@@ -17,7 +17,7 @@ import configuration from '../../config/configuration';
             useFactory: async () => ({
                 uri: configuration().mongoUri,
                 connectionFactory(connection) {
-                    connection.plugin(mongoosePaginate);
+                    connection.plugin(require('mongoose-paginate-v2'));
                     return connection;
                 },
             }),
