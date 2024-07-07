@@ -13,34 +13,34 @@ import configuration from '../../config/configuration';
 
 @Module({
     imports: [
-        // MongooseModule.forRootAsync({
-        //     useFactory: async () => ({
-        //         uri: configuration().mongoUri,
-        //         connectionFactory(connection) {
-        //             connection.plugin(mongoosePaginate);
-        //             return connection;
-        //         },
-        //     }),
-        // }),
         MongooseModule.forRootAsync({
-            useFactory: async (configurationService: ConfigurationService) => ({
+            useFactory: async () => ({
                 uri: configuration().mongoUri,
-                connectionFactory: (connection: Connection) => {
-                    if (connection.readyState === 1) {
-                        Logger.log(`MongoDB Connected with: ${connection.host}`);
-                    }
-                    connection.on('disconnected', () => {
-                        Logger.warn('DB disconnected');
-                    });
-                    connection.on('error', (error) => {
-                        Logger.error(`DB connection failed! for error: ${error}`);
-                    });
-                    // connection.plugin(mongoosePaginate);
+                connectionFactory(connection) {
+                    connection.plugin(mongoosePaginate);
                     return connection;
                 },
             }),
-            // inject: [ConfigurationService],
         }),
+        // MongooseModule.forRootAsync({
+        //     useFactory: async (configurationService: ConfigurationService) => ({
+        //         uri: configuration().mongoUri,
+        //         connectionFactory: (connection: Connection) => {
+        //             if (connection.readyState === 1) {
+        //                 Logger.log(`MongoDB Connected with: ${connection.host}`);
+        //             }
+        //             connection.on('disconnected', () => {
+        //                 Logger.warn('DB disconnected');
+        //             });
+        //             connection.on('error', (error) => {
+        //                 Logger.error(`DB connection failed! for error: ${error}`);
+        //             });
+        //             // connection.plugin(mongoosePaginate);
+        //             return connection;
+        //         },
+        //     }),
+        //     // inject: [ConfigurationService],
+        // }),
     ],
 })
 export class DatabaseModule { }
