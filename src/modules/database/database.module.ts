@@ -6,10 +6,10 @@ import configuration from '../../config/configuration';
 @Module({
     imports: [
         MongooseModule.forRootAsync({
-            useFactory: () => ({
+            useFactory: async () => ({
                 uri: configuration().mongoUri,
                 connectionFactory(connection) {
-                    connection.plugin(mongoosePaginate);
+                    connection.plugin(require('mongoose-paginate-v2'));
                     return connection;
                 },
             }),
