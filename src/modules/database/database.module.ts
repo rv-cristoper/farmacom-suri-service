@@ -35,7 +35,7 @@ import configuration from '../../config/configuration';
                     connection.on('error', (error) => {
                         Logger.error(`DB connection failed! for error: ${error}`);
                     });
-                    connection.plugin(mongoosePaginate);
+                    // connection.plugin(mongoosePaginate);
                     return connection;
                 },
             }),
