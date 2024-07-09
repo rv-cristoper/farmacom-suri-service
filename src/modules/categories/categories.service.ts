@@ -1,10 +1,11 @@
 import { PaginateModel } from 'mongoose';
 import { Injectable, ConflictException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Category } from './schemas/category.schema';
+import { Category } from '../../schemas/category.schema';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { PageDto } from '../../commons/dto/page.dto';
+import { PageOptionsDto } from '../../commons/dto/page-options.dto';
 
 @Injectable()
 export class CategoriesService {
@@ -25,10 +26,10 @@ export class CategoriesService {
     }
   }
 
-  async findAll() {
+  async findAll(paginationParams: PageOptionsDto) {
     const result = await this.category.paginate(
-      {},
-      { page: 1, limit: 1, sort: { name: 1 } }
+      paginationParams.query,
+      paginationParams.options,
     );
     return new PageDto(result.docs, result.totalDocs);
   }

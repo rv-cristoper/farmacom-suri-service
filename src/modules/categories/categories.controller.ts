@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { PageOptionsDto } from '../../commons/dto/page-options.dto';
 
 @Controller('categories')
 export class CategoriesController {
@@ -13,10 +14,10 @@ export class CategoriesController {
   }
 
   @Get()
-  async findAll() {
+  async findAll(@Query() paginationParams: PageOptionsDto) {
     return {
       message: 'success',
-      data: await this.categoriesService.findAll(),
+      data: await this.categoriesService.findAll(paginationParams),
     };
   }
 

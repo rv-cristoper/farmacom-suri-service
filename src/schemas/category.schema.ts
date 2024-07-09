@@ -1,11 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-import { BaseEntity } from '../../../commons/base-entity';
+import { BaseSchema } from './base-schema';
 
 export type CategoryDocument = HydratedDocument<Category>;
 
 @Schema({ timestamps: true, versionKey: false })
-export class Category extends BaseEntity {
+export class Category extends BaseSchema {
     @Prop({
         required: true,
         unique: true,
