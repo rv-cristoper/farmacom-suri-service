@@ -11,6 +11,11 @@ export class Category extends BaseSchema {
         unique: true,
     })
     name: string;
+
+    @Prop({
+        default: true,
+    })
+    isActive?: boolean;
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);

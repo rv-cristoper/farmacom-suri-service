@@ -13,15 +13,14 @@ export class CategoriesService {
 
   async create(createCategoryDto: CreateCategoryDto) {
     try {
-      const createdCategory = new this.category(createCategoryDto);
-      return await createdCategory.save();
+      const category = new this.category(createCategoryDto);
+      return await category.save();
     } catch (e) {
       if (e.code === 11000) {
         throw new ConflictException({
-          message: 'Category already exists',
+          message: 'Category name already exists',
         });
       }
-
       throw e;
     }
   }
@@ -34,15 +33,42 @@ export class CategoriesService {
     return new PageDto(result.docs, result.totalDocs);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
+  async findOne(id: string) {
+    try {
+      const category = await this.category.findById(id)
+      if (!category) throw new Error();
+      return category;
+    } catch (e) {
+      throw new ConflictException({
+        message: 'Category does not exists',
+      });
+    }
   }
 
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+  async update(id: string, updateCategoryDto: UpdateCategoryDto) {
+    try {
+      return await this.category.findByIdAndUpdate(id, updateCategoryDto)
+    } catch (e) {
+      if (e.code === 11000) {
+        throw new ConflictException({
+          message: 'Category name already exists',
+        });
+      }
+      throw new ConflictException({
+        message: 'Category does not exists',
+      });
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} category`;
+  async remove(id: string) {
+    try {
+      const category = await this.category.findByIdAndDelete(id)
+      if (!category) throw new Error();
+      return category;
+    } catch (e) {
+      throw new ConflictException({
+        message: 'Category does not exists',
+      });
+    }
   }
 }
