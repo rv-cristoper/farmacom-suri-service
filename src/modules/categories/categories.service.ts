@@ -33,6 +33,12 @@ export class CategoriesService {
     return new PageDto(result.docs, result.totalDocs);
   }
 
+  async findIdsByProperty({ property, search }: { property: string, search: string }) {
+    return this.category.find({
+      [property]: { $regex: search }
+    })
+  }
+
   async findOne(id: string) {
     try {
       const category = await this.category.findById(id)

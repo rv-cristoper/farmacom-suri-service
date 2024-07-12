@@ -13,6 +13,7 @@ export class Category extends BaseSchema {
     name: string;
 
     @Prop({
+        required: false,
         default: true,
     })
     isActive?: boolean;
