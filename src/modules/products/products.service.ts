@@ -32,11 +32,11 @@ export class ProductsService {
 
   async findAll(paginationParams: PageOptionsDto) {
     console.log(paginationParams.query)
-    const categories = await this.categoriesService.findIdsByProperty({
-      property: 'names',
-      search: "en",
-    })
-    console.log(categories)
+    // const categories = await this.categoriesService.findIdsByProperty({
+    //   property: 'names',
+    //   search: "en",
+    // })
+    // console.log(categories)
     const result = await this.product.paginate(
       paginationParams.query,
       {

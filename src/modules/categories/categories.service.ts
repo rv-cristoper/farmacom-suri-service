@@ -4,8 +4,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Category } from '../../schemas/category.schema';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import { PageDto } from '../../commons/dto/page.dto';
-import { PageOptionsDto } from '../../commons/dto/page-options.dto';
+// import { PageDto } from '../../commons/dto/page.dto';
+// import { PageOptionsDto } from '../../commons/dto/page-options.dto';
 
 @Injectable()
 export class CategoriesService {
@@ -25,19 +25,23 @@ export class CategoriesService {
     }
   }
 
-  async findAll(paginationParams: PageOptionsDto) {
-    const result = await this.category.paginate(
-      paginationParams.query,
-      paginationParams.options,
-    );
-    return new PageDto(result.docs, result.totalDocs);
+  async findAll() {
+    return this.category.find()
   }
 
-  async findIdsByProperty({ property, search }: { property: string, search: string }) {
-    return this.category.find({
-      [property]: { $regex: search }
-    })
-  }
+  // async findAll(paginationParams: PageOptionsDto) {
+  //   const result = await this.category.paginate(
+  //     paginationParams.query,
+  //     paginationParams.options,
+  //   );
+  //   return new PageDto(result.docs, result.totalDocs);
+  // }
+
+  // async findIdsByProperty({ property, search }: { property: string, search: string }) {
+  //   return this.category.find({
+  //     [property]: { $regex: search }
+  //   })
+  // }
 
   async findOne(id: string) {
     try {
