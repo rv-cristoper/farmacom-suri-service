@@ -23,5 +23,4 @@ import { HttpExceptionInterceptor } from './commons/interceptors/http-exception.
     },
   ],
 })
-
-export class AppModule { }
+export class AppModule {}

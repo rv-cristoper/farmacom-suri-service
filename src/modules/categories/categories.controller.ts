@@ -15,7 +15,7 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @Controller('categories')
 export class CategoriesController {
-  constructor(private readonly categoriesService: CategoriesService) { }
+  constructor(private readonly categoriesService: CategoriesService) {}
 
   @Post()
   async create(@Body() createCategoryDto: CreateCategoryDto) {
@@ -26,9 +26,9 @@ export class CategoriesController {
   @Get()
   async findAll() {
     return {
-      message: "success",
-      data: await this.categoriesService.findAll()
-    }
+      message: 'success',
+      data: await this.categoriesService.findAll(),
+    };
   }
 
   // @Get()
@@ -43,13 +43,16 @@ export class CategoriesController {
   async findOne(@Param('id') id: string) {
     const category = await this.categoriesService.findOne(id);
     return {
-      message: "success",
+      message: 'success',
       data: category,
     };
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateCategoryDto: UpdateCategoryDto,
+  ) {
     await this.categoriesService.update(id, updateCategoryDto);
     return { message: 'success' };
   }

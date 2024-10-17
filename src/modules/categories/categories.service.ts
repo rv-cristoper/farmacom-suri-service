@@ -9,7 +9,9 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @Injectable()
 export class CategoriesService {
-  constructor(@InjectModel(Category.name) private category: PaginateModel<Category>) { }
+  constructor(
+    @InjectModel(Category.name) private category: PaginateModel<Category>,
+  ) {}
 
   async create(createCategoryDto: CreateCategoryDto) {
     try {
@@ -26,7 +28,7 @@ export class CategoriesService {
   }
 
   async findAll() {
-    return this.category.find()
+    return this.category.find();
   }
 
   // async findAll(paginationParams: PageOptionsDto) {
@@ -45,7 +47,7 @@ export class CategoriesService {
 
   async findOne(id: string) {
     try {
-      const category = await this.category.findById(id)
+      const category = await this.category.findById(id);
       if (!category) throw new Error();
       return category;
     } catch (e) {
@@ -57,7 +59,7 @@ export class CategoriesService {
 
   async update(id: string, updateCategoryDto: UpdateCategoryDto) {
     try {
-      return await this.category.findByIdAndUpdate(id, updateCategoryDto)
+      return await this.category.findByIdAndUpdate(id, updateCategoryDto);
     } catch (e) {
       if (e.code === 11000) {
         throw new ConflictException({
@@ -72,7 +74,7 @@ export class CategoriesService {
 
   async remove(id: string) {
     try {
-      const category = await this.category.findByIdAndDelete(id)
+      const category = await this.category.findByIdAndDelete(id);
       if (!category) throw new Error();
       return category;
     } catch (e) {

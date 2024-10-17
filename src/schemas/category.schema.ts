@@ -6,17 +6,17 @@ export type CategoryDocument = HydratedDocument<Category>;
 
 @Schema({ timestamps: true, versionKey: false })
 export class Category extends BaseSchema {
-    @Prop({
-        required: true,
-        unique: true,
-    })
-    name: string;
+  @Prop({
+    required: true,
+    unique: true,
+  })
+  name: string;
 
-    @Prop({
-        required: false,
-        default: true,
-    })
-    isActive?: boolean;
+  @Prop({
+    required: false,
+    default: true,
+  })
+  isActive?: boolean;
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);
