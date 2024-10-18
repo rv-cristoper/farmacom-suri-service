@@ -6,14 +6,10 @@ import {
   Patch,
   Param,
   Delete,
-  // Query,
-  // UsePipes,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-// import { NotEmptyBodyPipe } from 'src/commons/pipes/not-empty-body.pipe';
-// import { PageOptionsDto } from '../../commons/dto/page-options.dto';
 
 @Controller('product')
 export class ProductsController {
@@ -24,14 +20,6 @@ export class ProductsController {
     await this.productsService.create(createProductDto);
     return { message: 'success' };
   }
-
-  // @Get()
-  // async findAll(@Query() paginationParams: PageOptionsDto) {
-  //   return {
-  //     message: 'success',
-  //     data: await this.productsService.findAll(paginationParams),
-  //   };
-  // }
 
   @Get()
   async findAll() {
@@ -51,7 +39,6 @@ export class ProductsController {
   }
 
   @Patch(':id')
-  // @UsePipes(NotEmptyBodyPipe)
   async update(
     @Param('id') id: string,
     @Body() updateProductDto: UpdateProductDto,

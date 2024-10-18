@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { CategoriesModule } from './modules/categories/categories.module';
 import { ProductsModule } from './modules/products/products.module';
 import { DatabaseModule } from './modules/database/database.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
@@ -12,7 +11,6 @@ import { HttpExceptionInterceptor } from './commons/interceptors/http-exception.
       envFilePath: '.env',
     }),
     DatabaseModule,
-    CategoriesModule,
     ProductsModule,
   ],
   controllers: [],
