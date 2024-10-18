@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { HttpExceptionInterceptor } from './commons/interceptors/http-exception.interceptor';
+import { setUpSwagger } from './utils/set-up-swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,6 +17,8 @@ async function bootstrap() {
       transform: true,
     }),
   );
+
+  setUpSwagger(app);
 
   await app.listen(3000);
 }

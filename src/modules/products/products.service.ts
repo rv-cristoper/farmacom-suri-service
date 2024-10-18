@@ -1,4 +1,8 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -33,7 +37,7 @@ export class ProductsService {
       if (!product) throw new Error();
       return product;
     } catch (e) {
-      throw new ConflictException({
+      throw new NotFoundException({
         message: 'Product does not exists',
       });
     }
@@ -48,7 +52,7 @@ export class ProductsService {
           message: 'Product name already exists',
         });
       }
-      throw new ConflictException({
+      throw new NotFoundException({
         message: 'Product does not exists',
       });
     }
@@ -58,7 +62,7 @@ export class ProductsService {
     try {
       return await this.product.findByIdAndUpdate(id, { isActive: false });
     } catch (e) {
-      throw new ConflictException({
+      throw new NotFoundException({
         message: 'Product does not exists',
       });
     }
