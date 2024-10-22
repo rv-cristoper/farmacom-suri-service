@@ -7,17 +7,20 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { ProductsService } from './products.service';
+import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { ApiBody, ApiTags } from '@nestjs/swagger';
 
 @Controller('product')
-export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+@ApiTags('product')
+export class ProductController {
+  constructor(private readonly productService: ProductService) {}
 
   @Post()
+  @ApiBody({ type: CreateProductDto })
   async create(@Body() createProductDto: CreateProductDto) {
-    await this.productsService.create(createProductDto);
+    await this.productService.create(createProductDto);
     return { message: 'success' };
   }
 
@@ -25,13 +28,13 @@ export class ProductsController {
   async findAll() {
     return {
       message: 'success',
-      data: await this.productsService.findAll(),
+      data: await this.productService.findAll(),
     };
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    const product = await this.productsService.findOne(id);
+    const product = await this.productService.findOne(id);
     return {
       message: 'success',
       data: product,
@@ -43,13 +46,13 @@ export class ProductsController {
     @Param('id') id: string,
     @Body() updateProductDto: UpdateProductDto,
   ) {
-    await this.productsService.update(id, updateProductDto);
+    await this.productService.update(id, updateProductDto);
     return { message: 'success' };
   }
 
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    await this.productsService.remove(id);
+    await this.productService.remove(id);
     return { message: 'success' };
   }
 }

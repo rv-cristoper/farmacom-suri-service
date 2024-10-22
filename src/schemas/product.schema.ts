@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 // import mongoose, { HydratedDocument } from 'mongoose';
 import { HydratedDocument } from 'mongoose';
 import { BaseSchema } from './base-schema';
+import { UnitOfMeasurement } from 'src/commons/enums/unitOfMeasurement.enum';
 // import { Category } from './category.schema';
 
 export type ProductDocument = HydratedDocument<Product>;
@@ -36,6 +37,28 @@ export class Product extends BaseSchema {
     default: true,
   })
   isActive?: boolean;
+
+  @Prop({
+    required: true,
+  })
+  unitOfMeasurement: UnitOfMeasurement;
+
+  @Prop({
+    required: true,
+  })
+  units: number;
+
+  @Prop({
+    required: false,
+    default: 0,
+  })
+  packageOrBox?: number;
+
+  @Prop({
+    required: false,
+    default: 0,
+  })
+  blisters?: number;
 
   // @Prop({
   //   required: true,

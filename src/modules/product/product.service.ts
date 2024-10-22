@@ -10,7 +10,7 @@ import { Product } from '../../schemas/product.schema';
 import { Model } from 'mongoose';
 
 @Injectable()
-export class ProductsService {
+export class ProductService {
   constructor(@InjectModel(Product.name) private product: Model<Product>) {}
 
   async create(createProductDto: CreateProductDto) {
