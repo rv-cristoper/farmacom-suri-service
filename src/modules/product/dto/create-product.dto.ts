@@ -10,7 +10,7 @@ import {
   ArrayNotEmpty,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { UnitOfMeasurement } from '@src/commons/enums/unitOfMeasurement.enum';
+import { UnitOfMeasurement } from '../../../commons/enums/unitOfMeasurement.enum';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateProductDto {

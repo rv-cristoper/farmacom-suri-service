@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 // import mongoose, { HydratedDocument } from 'mongoose';
 import { HydratedDocument } from 'mongoose';
 import { BaseSchema } from './base-schema';
-import { UnitOfMeasurement } from '@src/commons/enums/unitOfMeasurement.enum';
+import { UnitOfMeasurement } from '../commons/enums/unitOfMeasurement.enum';
 // import { Category } from './category.schema';
 
 export type ProductDocument = HydratedDocument<Product>;
