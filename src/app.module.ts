@@ -4,6 +4,7 @@ import { ProductModule } from './modules/product/product.module';
 import { DatabaseModule } from './modules/database/database.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { HttpExceptionInterceptor } from './commons/interceptors/http-exception.interceptor';
+import { ProductStockModule } from './modules/product-stock/product-stock.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { HttpExceptionInterceptor } from './commons/interceptors/http-exception.
     }),
     DatabaseModule,
     ProductModule,
+    ProductStockModule,
   ],
   controllers: [],
   providers: [

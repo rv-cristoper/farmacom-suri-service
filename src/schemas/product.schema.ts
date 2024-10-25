@@ -1,9 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-// import mongoose, { HydratedDocument } from 'mongoose';
 import { HydratedDocument } from 'mongoose';
 import { BaseSchema } from './base-schema';
 import { UnitOfMeasurement } from '../commons/enums/unitOfMeasurement.enum';
-// import { Category } from './category.schema';
 
 export type ProductDocument = HydratedDocument<Product>;
 
@@ -59,13 +57,6 @@ export class Product extends BaseSchema {
     default: 0,
   })
   blisters?: number;
-
-  // @Prop({
-  //   required: true,
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Category',
-  // })
-  // category: Category;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
