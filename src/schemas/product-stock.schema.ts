@@ -11,7 +11,7 @@ export class ProductStock extends BaseSchema {
     type: Types.ObjectId,
     ref: 'Product',
   })
-  product: Types.ObjectId;
+  productId: Types.ObjectId;
 
   @Prop({
     required: true,

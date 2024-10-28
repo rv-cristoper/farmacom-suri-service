@@ -3,37 +3,36 @@ import { CreateProductStockDto } from './dto/create-product-stock.dto';
 import { UpdateProductStockDto } from './dto/update-product-stock.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { ProductStock } from '../../schemas/product-stock.schema';
-import { Model } from 'mongoose';
-// import { ProductService } from '../product/product.service';
+import { Model, Types } from 'mongoose';
+import { ProductService } from '../product/product.service';
 
 @Injectable()
 export class ProductStockService {
   constructor(
     @InjectModel(ProductStock.name) private productStock: Model<ProductStock>,
-    // private readonly product: ProductService,
+    private readonly product: ProductService,
   ) {}
   async create(createProductStockDto: CreateProductStockDto) {
     try {
-      // await this.product.findOne(createProductStockDto.product);
-      const productStockByProductIdAndExpirationDate =
-        await this.productStock.findOne({
-          product: createProductStockDto.product,
-          expirationDate: createProductStockDto.expirationDate,
-        });
-      if (productStockByProductIdAndExpirationDate) {
-        productStockByProductIdAndExpirationDate.stock +=
-          createProductStockDto.stock;
-        return await productStockByProductIdAndExpirationDate.save();
+      await this.product.findOne(createProductStockDto.productId);
+      const productStockByExpirationDate = await this.productStock.findOne({
+        productId: new Types.ObjectId(createProductStockDto.productId),
+        expirationDate: createProductStockDto.expirationDate,
+      });
+      if (productStockByExpirationDate) {
+        productStockByExpirationDate.stock += createProductStockDto.stock;
+        return await productStockByExpirationDate.save();
       }
-      const productStock = new this.productStock(createProductStockDto);
-      return await productStock.save();
+      return await new this.productStock({
+        ...createProductStockDto,
+        productId: new Types.ObjectId(createProductStockDto.productId),
+      }).save();
     } catch (e) {
       throw e;
     }
   }
 
   async findAll() {
-    // return this.productStock.find().populate('product');
     return this.productStock.find();
   }
 

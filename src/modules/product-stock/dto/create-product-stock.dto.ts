@@ -3,7 +3,6 @@ import { Type } from 'class-transformer';
 import {
   IsDate,
   IsInt,
-  IsMongoId,
   IsNotEmpty,
   Min,
   Validate,
@@ -15,8 +14,10 @@ import {
 export class IsFutureDate implements ValidatorConstraintInterface {
   validate(date: Date) {
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return date >= today;
+    const todayFormatted = new Date(
+      Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate()),
+    );
+    return date >= todayFormatted;
   }
 
   defaultMessage() {
@@ -26,11 +27,10 @@ export class IsFutureDate implements ValidatorConstraintInterface {
 
 export class CreateProductStockDto {
   @ApiProperty({
-    example: '60c72b2f9b1e8e4d88fcd78a',
+    example: '6717def1ece8660a45a0cb01',
   })
   @IsNotEmpty()
-  @IsMongoId()
-  product: string;
+  productId: string;
 
   @ApiProperty({
     example: 100,
@@ -40,7 +40,7 @@ export class CreateProductStockDto {
   stock: number;
 
   @ApiProperty({
-    example: '2024-12-31T00:00:00.000Z',
+    example: '2024-12-29',
   })
   @IsNotEmpty()
   @IsDate()
