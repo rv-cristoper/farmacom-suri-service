@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateProductStockDto } from './dto/create-product-stock.dto';
 import { UpdateProductStockDto } from './dto/update-product-stock.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -36,15 +41,42 @@ export class ProductStockService {
     return this.productStock.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} productStock`;
+  async findOne(id: string) {
+    try {
+      return await this.productStock.findById(id);
+    } catch (e) {
+      throw new NotFoundException({
+        message: 'Product stock does not exists',
+      });
+    }
   }
 
-  update(id: number, updateProductStockDto: UpdateProductStockDto) {
-    return `This action updates a #${id} productStock`;
+  async update(id: string, updateProductStockDto: UpdateProductStockDto) {
+    try {
+      return await this.productStock.findByIdAndUpdate(
+        id,
+        updateProductStockDto,
+      );
+    } catch (e) {
+      throw new NotFoundException({
+        message: 'Product stock does not exists',
+      });
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} productStock`;
+  async remove(id: string) {
+    try {
+      const productStock = await this.findOne(id);
+      if (productStock!.stock > 0)
+        throw new BadRequestException(
+          'Cannot delete product with stock greater than zero',
+        );
+      await this.productStock.findByIdAndDelete(id);
+    } catch (e) {
+      if (e.status === 404) throw e;
+      throw new ConflictException({
+        message: e.message,
+      });
+    }
   }
 }

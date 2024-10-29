@@ -32,20 +32,26 @@ export class ProductStockController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productStockService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const productStock = await this.productStockService.findOne(id);
+    return {
+      message: 'success',
+      data: productStock,
+    };
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateProductStockDto: UpdateProductStockDto,
   ) {
-    return this.productStockService.update(+id, updateProductStockDto);
+    await this.productStockService.update(id, updateProductStockDto);
+    return { message: 'success' };
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productStockService.remove(+id);
+  async remove(@Param('id') id: string) {
+    await this.productStockService.remove(id);
+    return { message: 'success' };
   }
 }
