@@ -31,9 +31,6 @@ export class ProductService {
     return await this.product
       .aggregate([
         {
-          $match: { isActive: true },
-        },
-        {
           $lookup: {
             from: 'productstocks',
             localField: '_id',
