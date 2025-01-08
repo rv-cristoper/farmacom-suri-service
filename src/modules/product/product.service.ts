@@ -35,7 +35,7 @@ export class ProductService {
             from: 'productstocks',
             localField: '_id',
             foreignField: 'productId',
-            as: 'stocks',
+            as: 'stock',
           },
         },
       ])
